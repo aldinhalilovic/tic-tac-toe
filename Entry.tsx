@@ -2,8 +2,6 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Intro from './screens/Intro'
-// import HomeTab from './tabs/HomeTab'
-// import Home from './screens/Home'
 import HomeTab from './tabs/HomeTab'
 
 export type StackProps = {
@@ -13,7 +11,7 @@ export type StackProps = {
 
 const Stack = createNativeStackNavigator<StackProps>()
 
-export default function App() {
+const Entry = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -36,3 +34,5 @@ export default function App() {
     </NavigationContainer>
   )
 }
+
+export default Entry

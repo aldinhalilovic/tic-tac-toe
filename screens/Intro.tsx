@@ -1,37 +1,42 @@
 import React from 'react'
-import * as reactNative from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient'
+import { StackProps } from '../App'
+import { SafeAreaView, View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native'
 import { Logo, Star, Rocket, Nlo } from '../assets/images'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import MainView from '../components/MainView'
 
-const Intro = ({ navigation }: { navigation: any }) => {
+interface IntroProps {
+  navigation: NativeStackNavigationProp<StackProps, 'Intro'>
+}
+
+const Intro = ({ navigation }: IntroProps) => {
   return (
-    <LinearGradient style={styles.container} colors={['#5D5FEF', '#843CE0']}>
-      <reactNative.SafeAreaView>
-        <reactNative.View style={styles.logo}>
-          <reactNative.Image source={Logo} />
-        </reactNative.View>
-        <reactNative.View style={styles.stars}>
-          <reactNative.Image source={Star} style={styles.star} />
-          <reactNative.Image source={Star} style={styles.star} />
-          <reactNative.Image source={Star} style={styles.star} />
-        </reactNative.View>
+    <MainView>
+      <View style={styles.container}>
+        <SafeAreaView>
+          <View style={styles.logo}>
+            <Image source={Logo} />
+          </View>
+          <View style={styles.stars}>
+            <Image source={Star} style={styles.star} />
+            <Image source={Star} style={styles.star} />
+            <Image source={Star} style={styles.star} />
+          </View>
 
-        <reactNative.TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('Home', {})}
-        >
-          <reactNative.Text style={styles.buttonText}>Let s play</reactNative.Text>
-        </reactNative.TouchableOpacity>
-        <reactNative.Image source={Nlo} style={{ alignSelf: 'flex-end' }} />
-        <reactNative.Image source={Rocket} style={{ alignSelf: 'flex-start' }} />
-      </reactNative.SafeAreaView>
-    </LinearGradient>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('HomeTab')}>
+            <Text style={styles.buttonText}>Let&apos;s play</Text>
+          </TouchableOpacity>
+          <Image source={Nlo} style={{ alignSelf: 'flex-end' }} />
+          <Image source={Rocket} style={{ alignSelf: 'flex-start' }} />
+        </SafeAreaView>
+      </View>
+    </MainView>
   )
 }
 
 export default Intro
 
-const styles = reactNative.StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
