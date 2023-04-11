@@ -1,21 +1,25 @@
 import React from 'react'
 import { Text } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import Home from '../screens/Home'
 import Profile from '../screens/Profile'
 import { Entypo, FontAwesome } from '@expo/vector-icons'
+import Home from '../screens/Home/Home'
 
 type ITabProps = {
   Home: undefined
   Profile: undefined
 }
+
 const Tab = createBottomTabNavigator<ITabProps>()
 
 const HomeTab = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarStyle: { backgroundColor: '#843CE0', borderTopWidth: 0, borderTopColor: 'b' },
+        tabBarStyle: {
+          backgroundColor: '#843CE0',
+          borderTopWidth: 0,
+        },
       }}
     >
       <Tab.Screen

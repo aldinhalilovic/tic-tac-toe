@@ -1,11 +1,18 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { Image, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Joystick, Planet, Play, Robot, Store, Thrumpet } from '../assets/images'
-import GameOption from '../components/GameOption'
-import MainView from '../components/MainView'
+import { Joystick, Planet, Play, Robot, Store, Thrumpet } from '../../assets/images'
+import GameOption from '../../components/gameoption/GameOption'
+import MainView from '../../components/MainView'
+import { IHomeStackProps } from '../../stacks/HomeStacks'
+import styles from './style'
 
-export default function Home() {
+type IHomeProps = {
+  navigation: NativeStackNavigationProp<IHomeStackProps, 'HomeTab'>
+}
+
+export default function Home({ navigation }: IHomeProps) {
   return (
     <MainView>
       <SafeAreaView style={styles.container}>
@@ -27,21 +34,23 @@ export default function Home() {
             image={Robot}
             circleBackgroundColor='#FFA800'
             titleBackgroundColor='#F3501D'
+            onPress={() => navigation.navigate('Single')}
           />
           <GameOption
             title='Two Players'
             image={Play}
             circleBackgroundColor='#EB00FF'
             titleBackgroundColor='transparent'
+            onPress={() => navigation.navigate('Two')}
           />
           <GameOption
-            title='Market Place '
+            title='Market Place'
             image={Store}
             circleBackgroundColor='#391898'
             titleBackgroundColor='#451CBB'
           />
           <GameOption
-            title='Market Place '
+            title='Challenges'
             image={Thrumpet}
             circleBackgroundColor='#4C9BD4'
             titleBackgroundColor='#33A6BF'
@@ -54,26 +63,3 @@ export default function Home() {
     </MainView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 20,
-  },
-  header: {
-    marginTop: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  title: {
-    fontSize: 36,
-    color: 'white',
-    lineHeight: 42,
-  },
-  line: {
-    width: '80%',
-    height: 3,
-    borderRadius: 50,
-    backgroundColor: '#FFA800',
-    alignSelf: 'flex-start',
-  },
-})

@@ -1,9 +1,10 @@
 import React from 'react'
-import { StackProps } from '../App'
-import { SafeAreaView, View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native'
-import { Logo, Star, Rocket, Nlo } from '../assets/images'
+import { StackProps } from '../../App'
+import { SafeAreaView, View, Image, TouchableOpacity, Text } from 'react-native'
+import { Logo, Star, Rocket, Nlo } from '../../assets/images'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import MainView from '../components/MainView'
+import MainView from '../../components/MainView'
+import styles from './style'
 
 interface IntroProps {
   navigation: NativeStackNavigationProp<StackProps, 'Intro'>
@@ -23,7 +24,7 @@ const Intro = ({ navigation }: IntroProps) => {
             <Image source={Star} style={styles.star} />
           </View>
 
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('HomeTab')}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('HomeStacks')}>
             <Text style={styles.buttonText}>Let&apos;s play</Text>
           </TouchableOpacity>
           <Image source={Nlo} style={{ alignSelf: 'flex-end' }} />
@@ -35,37 +36,3 @@ const Intro = ({ navigation }: IntroProps) => {
 }
 
 export default Intro
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  logo: {
-    marginTop: 70,
-    alignItems: 'center',
-  },
-  stars: {
-    flexDirection: 'row',
-    gap: 50,
-    marginBottom: 20,
-  },
-  star: {
-    width: 60,
-    height: 60,
-  },
-  button: {
-    backgroundColor: 'white',
-    borderRadius: 22,
-    height: '9.7%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 25,
-  },
-  buttonText: {
-    color: '#843CE0',
-    fontWeight: '600',
-    fontSize: 30,
-    letterSpacing: 1.3,
-  },
-})
