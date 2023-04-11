@@ -3,14 +3,10 @@ import { Text } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Profile from '../screens/Profile'
 import { Entypo, FontAwesome } from '@expo/vector-icons'
-import Home from '../screens/Home/Home'
+import Home from '../screens/Home'
+import { HomeTabProps } from '../models'
 
-type ITabProps = {
-  Home: undefined
-  Profile: undefined
-}
-
-const Tab = createBottomTabNavigator<ITabProps>()
+const Tab = createBottomTabNavigator<HomeTabProps>()
 
 const HomeTab = () => {
   return (

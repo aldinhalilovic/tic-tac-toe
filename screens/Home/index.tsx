@@ -1,18 +1,18 @@
 import React from 'react'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { Image, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Joystick, Planet, Play, Robot, Store, Thrumpet } from '../../assets/images'
-import GameOption from '../../components/gameoption/GameOption'
+import { HomeProps } from '../../models'
+import GameOption from '../../components/gameoption'
 import MainView from '../../components/MainView'
-import { IHomeStackProps } from '../../stacks/HomeStacks'
+import Planet from '../../assets/images/planet.svg'
+import Robot from '../../assets/images/robot.svg'
+import Play from '../../assets/images/play.svg'
+import Store from '../../assets/images/store.svg'
+import Thrumpet from '../../assets/images/thrumpet.svg'
+import Joystick from '../../assets/images/joystick.svg'
 import styles from './style'
 
-type IHomeProps = {
-  navigation: NativeStackNavigationProp<IHomeStackProps, 'HomeTab'>
-}
-
-export default function Home({ navigation }: IHomeProps) {
+export default function Home({ navigation }: HomeProps) {
   return (
     <MainView>
       <SafeAreaView style={styles.container}>
@@ -26,7 +26,7 @@ export default function Home({ navigation }: IHomeProps) {
             <Text style={styles.title}>Select Game</Text>
             <View style={styles.line}></View>
           </View>
-          <Image source={Planet} />
+          <Planet />
         </View>
         <View style={{ paddingHorizontal: 15 }}>
           <GameOption
@@ -41,7 +41,7 @@ export default function Home({ navigation }: IHomeProps) {
             image={Play}
             circleBackgroundColor='#EB00FF'
             titleBackgroundColor='transparent'
-            onPress={() => navigation.navigate('Two')}
+            onPress={() => navigation.navigate('MultiPlayer')}
           />
           <GameOption
             title='Market Place'
@@ -57,7 +57,7 @@ export default function Home({ navigation }: IHomeProps) {
           />
         </View>
         <View style={{ alignSelf: 'flex-end' }}>
-          <Image source={Joystick} />
+          <Joystick />
         </View>
       </SafeAreaView>
     </MainView>

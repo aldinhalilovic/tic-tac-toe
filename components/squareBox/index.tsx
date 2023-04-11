@@ -1,17 +1,14 @@
 import { TouchableOpacity } from 'react-native'
 import React from 'react'
 import styles from './styles'
-import { XSkin, Oskin } from '../../assets/images'
+import Xskin from '../../assets/images/Xskin2.svg'
+import Oskin from '../../assets/images/Oskin2.svg'
+import { SquareBoxProps } from '../../models'
 
-interface ISquareBoxProps {
-  value: string | null
-  onClickFn: () => void
-}
-
-const SquareBox = (props: ISquareBoxProps) => {
+const SquareBox = (props: SquareBoxProps) => {
   return (
     <TouchableOpacity onPress={props.onClickFn} style={styles.container}>
-      {props.value === null ? null : props.value === 'X' ? <XSkin /> : <Oskin />}
+      {props.value === null ? null : props.value === 'X' ? <Xskin /> : <Oskin />}
     </TouchableOpacity>
   )
 }

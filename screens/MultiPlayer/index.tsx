@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, Alert } from 'react-native'
+import React, { useState } from 'react'
+import { View, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Ooption, Xoption } from '../assets/images'
+import Xskin from '../../assets/images/Xskin2.svg'
+import Oskin from '../../assets/images/Oskin2.svg'
+import MainView from '../../components/MainView'
+import PlayerOption from '../../components/playeroption'
+import Score from '../../components/score'
+import SquareBox from '../../components/squareBox'
+import styles from './style'
 
-import MainView from '../components/MainView'
-import PlayerOption from '../components/playeroption/PlayerOption'
-import Score from '../components/score/Score'
-import SquareBox from '../components/squareBox'
-
-const SinglePlayer = () => {
+const MultiPlayer = () => {
   const initBoardState: (null[] | string[])[] = [
     [null, null, null],
     [null, null, null],
     [null, null, null],
   ]
+  const [player1Score, setPlayer1Score] = useState<number>(0)
+  const [player2Score, setPlayer2Score] = useState<number>(0)
   const [boardFields, setBoardFields] = useState(initBoardState)
   const [player, setPlayer] = useState<boolean>(true)
 
@@ -23,7 +26,7 @@ const SinglePlayer = () => {
   }
 
   const checkingWinner = () => {
-    let winner = null
+    let winner: string | null = null
     for (let i = 0; i < boardFields.length; i++) {
       const rowSet = new Set(boardFields[i])
       winner = checkListWinner(rowSet)
@@ -49,6 +52,9 @@ const SinglePlayer = () => {
           onPress: () => {
             const clearTable = [...initBoardState]
             setBoardFields(clearTable)
+            winner === 'X'
+              ? (setPlayer1Score((prev) => prev + 1), setPlayer(true))
+              : (setPlayer2Score((prev) => prev + 1), setPlayer(false))
           },
         },
       ])
@@ -69,9 +75,9 @@ const SinglePlayer = () => {
     <MainView>
       <SafeAreaView>
         <View style={styles.header}>
-          <PlayerOption image={Xoption} title='Player one' />
-          <Score />
-          <PlayerOption image={Ooption} title='Player two' />
+          <PlayerOption image={Xskin} title='Player one' />
+          <Score player1={player1Score} player2={player2Score} />
+          <PlayerOption image={Oskin} title='Player two' />
         </View>
         <View style={styles.contentBox}>
           <View style={styles.content}>
@@ -91,32 +97,4 @@ const SinglePlayer = () => {
   )
 }
 
-export default SinglePlayer
-
-const styles = StyleSheet.create({
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    marginVertical: 20,
-  },
-  contentBox: {
-    height: '58%',
-    width: '80%',
-    backgroundColor: '#391898',
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    top: '25%',
-    borderRadius: 20,
-  },
-  content: {
-    height: '90%',
-    width: '90%',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-})
+export default MultiPlayer
