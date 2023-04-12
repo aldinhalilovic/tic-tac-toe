@@ -44,6 +44,14 @@ export type ScoreType = {
 }
 
 export type PlayerOptionType = {
-  image: React.FC<SvgProps>
+  option: string
   title: string
+  activePlayer: string
+}
+
+export type ModalProps = {
+  show: boolean
+  onClose: () => void
+  onGoBack: () => void
+  winner: string | null
 }
