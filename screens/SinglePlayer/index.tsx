@@ -3,6 +3,7 @@ import styles from './styles'
 import MainView from '../../components/MainView'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../../components/header'
+import InputModal from '../../components/inputModal/InputModal'
 
 // type SinglePlayerProps = {
 //   navigation: NativeStackNavigationProp<HomeStackProps, 'Single'>
@@ -15,7 +16,8 @@ const SinglePlayer = () => {
   return (
     <MainView>
       <SafeAreaView style={styles.container}>
-        <Header player1Score={player1Score} player2Score={player2Score} player2='Computer' />
+        {/* <Header player1Score={player1Score} player2Score={player2Score} player2='Computer' /> */}
+        <InputModal />
       </SafeAreaView>
     </MainView>
   )

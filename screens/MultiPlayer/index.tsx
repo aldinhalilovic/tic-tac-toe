@@ -8,6 +8,7 @@ import styles from './style'
 import ModalTab from '../../components/modal'
 import Header from '../../components/header'
 import { Foundation } from '@expo/vector-icons'
+import { useInputModal } from '../../hooks/useInputModal'
 
 const MultiPlayer = () => {
   const initBoardState: (null[] | string[])[] = [
@@ -17,10 +18,22 @@ const MultiPlayer = () => {
   ]
   const [winner, setWinner] = useState<string | null>(null)
   const [boardFields, setBoardFields] = useState(initBoardState)
-  const [playerOneName, setPlayerOneName] = useState<string>('Player One')
-  const [playerTwoName, setPlayerTwoName] = useState<string>('Player Two')
+
+  const {
+    modal: firstPlayerModal,
+    showModal: showFirstPlayerModal,
+    value: firstPlayerName,
+  } = useInputModal({ label: 'Enter first player', defaultValue: 'Player One' })
+
+  const {
+    modal: secondPlayerModal,
+    showModal: showSecondPlayerModal,
+    value: secondPlayerName,
+  } = useInputModal({ label: 'Enter second player', defaultValue: 'Player Two' })
+
   const [playerXScore, setPlayerXScore] = useState<number>(0)
   const [playerOScore, setPlayerOScore] = useState<number>(0)
+
   const [canPlay, setCanPlay] = useState<boolean>(true)
   const [player, setPlayer] = useState<string>('X')
   const [draw, setDraw] = useState<boolean>(false)
@@ -61,11 +74,10 @@ const MultiPlayer = () => {
     }
 
     if (currentWinner) {
-      setWinner(currentWinner.toString())
+      setWinner(currentWinner.toString() === 'X' ? firstPlayerName : secondPlayerName)
       console.log('win', currentWinner)
     } else {
       setDraw(draw)
-      console.log(draw)
     }
   }
 
@@ -83,11 +95,13 @@ const MultiPlayer = () => {
     const clearTable = [...initBoardState]
     setBoardFields(clearTable)
     setWinner(null)
+    setDraw(false)
   }
 
   const hideModal = () => {
     setCanPlay(false)
     setWinner(null)
+    setDraw(false)
   }
 
   const restart = () => {
@@ -98,11 +112,23 @@ const MultiPlayer = () => {
     setPlayerXScore(0)
     setPlayer('X')
     setCanPlay(true)
+    setDraw(false)
   }
+
+  console.log({
+    firstPlayerName,
+    secondPlayerName,
+  })
+
   useEffect(() => {
-    Alert.prompt('Enter first player name', '', (text: string) => setPlayerOneName(text))
-    Alert.prompt('Enter second player name', '', (text: string) => setPlayerTwoName(text))
+    showFirstPlayerModal()
   }, [])
+
+  useEffect(() => {
+    if (firstPlayerName && !secondPlayerName) {
+      showSecondPlayerModal()
+    }
+  }, [firstPlayerName])
 
   return (
     <MainView>
@@ -110,7 +136,8 @@ const MultiPlayer = () => {
         <Header
           player1Score={playerXScore}
           player2Score={playerOScore}
-          player2='Player two'
+          player1={firstPlayerName || 'Player One'}
+          player2={secondPlayerName || 'Player Two'}
           activePlayer={player}
         />
         <TouchableOpacity style={{ alignSelf: 'center', height: 80, marginTop: 20 }}>
@@ -131,7 +158,15 @@ const MultiPlayer = () => {
             )}
           </View>
         </View>
-        <ModalTab show={!!winner} onClose={playAgain} onGoBack={hideModal} winner={winner} />
+        <ModalTab
+          show={!!winner || draw}
+          onClose={playAgain}
+          onGoBack={hideModal}
+          winner={winner}
+        />
+
+        {firstPlayerModal}
+        {secondPlayerModal}
       </SafeAreaView>
     </MainView>
   )
