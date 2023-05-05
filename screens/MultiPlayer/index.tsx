@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import MainView from '../../components/MainView'
@@ -9,6 +9,7 @@ import ModalTab from '../../components/modal'
 import Header from '../../components/header'
 import { Foundation } from '@expo/vector-icons'
 import { useInputModal } from '../../hooks/useInputModal'
+import { checkListWinner } from '../../utils'
 
 const MultiPlayer = () => {
   const initBoardState: (null[] | string[])[] = [
@@ -16,8 +17,9 @@ const MultiPlayer = () => {
     [null, null, null],
     [null, null, null],
   ]
-  const [winner, setWinner] = useState<string | null>(null)
+
   const [boardFields, setBoardFields] = useState(initBoardState)
+  const [winner, setWinner] = useState<string | null>(null)
 
   const {
     modal: firstPlayerModal,
@@ -37,12 +39,6 @@ const MultiPlayer = () => {
   const [canPlay, setCanPlay] = useState<boolean>(true)
   const [player, setPlayer] = useState<string>('X')
   const [draw, setDraw] = useState<boolean>(false)
-
-  const checkListWinner = (boardSet: Set<string | null>) => {
-    const boarSetList = Array.from(boardSet)
-    if (boarSetList.includes(null)) return false
-    return boarSetList.length === 1 && boarSetList[0] ? boarSetList[0] : null
-  }
 
   const checkingWinner = () => {
     let draw = true
@@ -75,7 +71,6 @@ const MultiPlayer = () => {
 
     if (currentWinner) {
       setWinner(currentWinner.toString() === 'X' ? firstPlayerName : secondPlayerName)
-      console.log('win', currentWinner)
     } else {
       setDraw(draw)
     }
@@ -114,11 +109,6 @@ const MultiPlayer = () => {
     setCanPlay(true)
     setDraw(false)
   }
-
-  console.log({
-    firstPlayerName,
-    secondPlayerName,
-  })
 
   useEffect(() => {
     showFirstPlayerModal()
