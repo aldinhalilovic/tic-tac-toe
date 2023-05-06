@@ -6,6 +6,7 @@ import Header from '../../components/header'
 import { Alert, View } from 'react-native'
 import SquareBox from '../../components/squareBox'
 import { checkListWinner } from '../../utils'
+import ModalTab from '../../components/modal'
 
 const SinglePlayer = () => {
   const initBoardState: (null[] | string[])[] = [
@@ -50,7 +51,7 @@ const SinglePlayer = () => {
         ? setPlayer1Score((prev) => prev + 1)
         : setPlayer2Score((prev) => prev + 1)
       setWinner(currentWinner.toString() === 'X' ? 'Aldin' : 'Computer')
-      Alert.alert(`${currentWinner} je pobednik!`)
+      // Alert.alert(`${currentWinner} je pobednik!`)
     } else {
       setDraw(draw)
     }
@@ -85,14 +86,27 @@ const SinglePlayer = () => {
     }
   }
 
+  const playAgain = () => {
+    const clearTable = [...initBoardState]
+    setBoardFields(clearTable)
+    setWinner(null)
+    setDraw(false)
+  }
+
+  const hideModal = () => {
+    setCanPlay(false)
+    setWinner(null)
+    setDraw(false)
+  }
+
   if (player === 'O' && winner !== 'Computer') {
     computerPlays()
     checkingWinner()
   }
 
-  if (draw) {
-    Alert.alert('Draw')
-  }
+  // if (draw) {
+  //   Alert.alert('Draw')
+  // }
 
   return (
     <MainView>
@@ -117,6 +131,12 @@ const SinglePlayer = () => {
             )}
           </View>
         </View>
+        <ModalTab
+          show={!!winner || draw}
+          onClose={playAgain}
+          onGoBack={hideModal}
+          winner={winner}
+        />
       </SafeAreaView>
     </MainView>
   )
